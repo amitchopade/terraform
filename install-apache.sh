@@ -4,6 +4,7 @@ sudo yum update -y
 sudo yum install -y httpd docker
 sudo service httpd start
 sudo yum install docker start
+sudo docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
 sudo usermod -a -G apache ec2-user
 sudo chown -R ec2-user:apache /var/www
 sudo yum install -y mysql php php-mysql
