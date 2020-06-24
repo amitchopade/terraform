@@ -1,0 +1,37 @@
+---
+#
+# Installing Elasticsearch
+#
+
+# Add Elasticsearch apt key
+
+- name: Add Elasticsearch apt key
+  yum_key:
+   url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+   state: present
+
+# Add the Elasticsearch apt repo. For versions 6 of the stack - use '6.x-prerelease':
+
+- name: Adding Elasticsearch repo
+  yum_repository:
+   repo: https://artifacts.elastic.co/packages/7.x/yum
+   state: present
+
+# Installing Elasticsearch
+
+- name: Install Elasticsearch
+  yum:
+   name: elasticsearch
+   update_cache: yes
+
+# Update Elasticsearch config file to allow access (to secure Elasticsearch, bind to 'localhost').
+
+- name: Updating the config file to allow outside access
+  lineinfile:
+   destfile: /etc/elasticsearch/elasticsearch.yml
+   regexp: 'network.host:'
+   line: 'network.host: 0.0.0.0'
+
+# Update Elasticsearch port in config file
+
+- name: Updating the port in config file
